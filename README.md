@@ -71,6 +71,13 @@ sudo apt install -y git cmake build-essential clang pkg-config \
   portaudio19-dev nlohmann-json3-dev python3 python3-venv python3-pip
 ```
 
+Install the Pisound software stack, then reboot:
+
+```bash
+curl https://blokas.io/pisound/install.sh | sh
+sudo reboot
+```
+
 Clone both repositories side-by-side:
 
 ```bash
