@@ -4,6 +4,7 @@
 #include <csignal>
 #include <cctype>
 #include <cmath>
+#include <cstdint>
 #include <cstdlib>
 #include <filesystem>
 #include <iostream>
@@ -394,17 +395,18 @@ int AudioCallback(const void* inputBuffer,
                   PaStreamCallbackFlags,
                   void* userData) {
   auto* state = static_cast<AppState*>(userData);
-  auto* out = static_cast<float*>(outputBuffer);
-  const auto* in = static_cast<const float*>(inputBuffer);
+  auto* out = static_cast<int16_t*>(outputBuffer);
+  const auto* in = static_cast<const int16_t*>(inputBuffer);
 
   if (framesPerBuffer > state->inputMono.size()) {
-    std::fill(out, out + framesPerBuffer * kOutputChannels, 0.0f);
+    std::fill(out, out + framesPerBuffer * kOutputChannels, static_cast<int16_t>(0));
     return g_running ? paContinue : paComplete;
   }
 
   for (unsigned long i = 0; i < framesPerBuffer; ++i) {
     const NAM_SAMPLE sample =
-        in ? static_cast<NAM_SAMPLE>(in[i * kInputChannels]) : static_cast<NAM_SAMPLE>(0);
+        in ? static_cast<NAM_SAMPLE>(in[i * kInputChannels] / 32768.0f)
+           : static_cast<NAM_SAMPLE>(0);
     NAM_SAMPLE processed = sample * state->inputGainLinear;
     if (state->tonePosition == TonePosition::kPre) {
       processed = state->toneControls.Process(processed);
@@ -425,7 +427,7 @@ int AudioCallback(const void* inputBuffer,
         toned * state->outputGainLinear,
         static_cast<NAM_SAMPLE>(-1.0),
         static_cast<NAM_SAMPLE>(1.0));
-    const float sample = static_cast<float>(y);
+    const auto sample = static_cast<int16_t>(std::lrint(y * 32767.0f));
     out[i * 2 + 0] = sample;
     out[i * 2 + 1] = sample;
   }
@@ -562,9 +564,9 @@ int main(int argc, char** argv) {
   PaStreamParameters inputParams{};
   PaStreamParameters outputParams{};
   inputParams.channelCount = kInputChannels;
-  inputParams.sampleFormat = paFloat32;
+  inputParams.sampleFormat = paInt16;
   outputParams.channelCount = kOutputChannels;
-  outputParams.sampleFormat = paFloat32;
+  outputParams.sampleFormat = paInt16;
 
   std::string selectedDeviceLabel;
 #ifdef __linux__
@@ -620,7 +622,9 @@ int main(int argc, char** argv) {
       Pa_IsFormatSupported(&inputParams, &outputParams, sampleRate);
   if (support != paFormatIsSupported) {
     std::cerr << "Device \"" << selectedDeviceLabel << "\" does not support "
-              << sampleRate << " Hz with 1 input / 2 output float32.\n";
+              << sampleRate << " Hz with "
+              << kInputChannels << " input / "
+              << kOutputChannels << " output int16.\n";
     std::cerr << "You likely need a resampler or a different sample rate.\n";
     Pa_Terminate();
     return 1;
