@@ -46,7 +46,7 @@ Still in progress:
 
 For the audio host:
 - Raspberry Pi OS 64-bit recommended
-- a built copy of `NeuralAmpModelerCore`
+- a local checkout of `NeuralAmpModelerCore`
 - C++20 compiler
 - CMake
 - PortAudio
@@ -59,6 +59,47 @@ For the web UI:
 ## Audio host
 
 `main.cpp` is the standalone host entry point.
+
+### Fresh Bookworm setup
+
+On a fresh Raspberry Pi OS Bookworm 64-bit install:
+
+```bash
+sudo apt update
+sudo apt full-upgrade -y
+sudo apt install -y git cmake build-essential clang pkg-config \
+  portaudio19-dev nlohmann-json3-dev python3 python3-venv python3-pip
+```
+
+Clone both repositories side-by-side:
+
+```bash
+git clone https://github.com/Klinenator/raspi-NAM.git
+git clone --recursive https://github.com/sdatkinson/NeuralAmpModelerCore.git
+```
+
+If you forgot `--recursive`, fix the NAM core checkout with:
+
+```bash
+git -C NeuralAmpModelerCore submodule update --init --recursive
+```
+
+Build the host:
+
+```bash
+cd raspi-NAM
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++
+cmake --build build -j"$(nproc)"
+```
+
+If `NeuralAmpModelerCore` is not cloned next to this repo, point CMake at it explicitly:
+
+```bash
+cmake -S . -B build \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_CXX_COMPILER=clang++ \
+  -DNAM_CORE_DIR=/path/to/NeuralAmpModelerCore
+```
 
 The host currently supports:
 - loading a `.nam` model from disk
