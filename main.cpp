@@ -23,7 +23,7 @@ constexpr unsigned long kFramesPerBuffer = 128;
 constexpr unsigned long kMaxBlockSize = 1024;
 constexpr double kFallbackSampleRate = 48000.0;
 constexpr double kPi = 3.14159265358979323846;
-constexpr int kInputChannels = 1;
+constexpr int kInputChannels = 2;
 constexpr int kOutputChannels = 2;
 
 std::atomic<bool> g_running{true};
@@ -404,7 +404,7 @@ int AudioCallback(const void* inputBuffer,
 
   for (unsigned long i = 0; i < framesPerBuffer; ++i) {
     const NAM_SAMPLE sample =
-        in ? static_cast<NAM_SAMPLE>(in[i]) : static_cast<NAM_SAMPLE>(0);
+        in ? static_cast<NAM_SAMPLE>(in[i * kInputChannels]) : static_cast<NAM_SAMPLE>(0);
     NAM_SAMPLE processed = sample * state->inputGainLinear;
     if (state->tonePosition == TonePosition::kPre) {
       processed = state->toneControls.Process(processed);
