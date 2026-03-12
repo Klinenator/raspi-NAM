@@ -151,6 +151,28 @@ The web UI looks for models in:
 
 Only files ending in `.nam` are listed.
 
+## Offline tube-stage audition
+
+The repo also includes a small offline test tool for auditioning the `TubeStage`
+prototype without using Pisound or live audio.
+
+Build it with the normal CMake build, then generate a low-E test note:
+
+```bash
+./build/tube_stage_test \
+  --output-prefix low_e \
+  --preset marshall \
+  --frequency-hz 82.41 \
+  --duration 2.0
+```
+
+That writes:
+
+- `low_e_input.wav`
+- `low_e_output.wav`
+
+You can then A/B them by ear in any audio player or DAW.
+
 ## Web UI
 
 The Flask server serves a small local control page and reads/writes:

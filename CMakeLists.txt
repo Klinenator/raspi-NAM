@@ -41,10 +41,18 @@ add_executable(nam_pisound_host
   ${NAM_SOURCES}
 )
 
+add_executable(tube_stage_test
+  tools/tube_stage_test.cpp
+)
+
 target_include_directories(nam_pisound_host PRIVATE
   "${NAM_CORE_DIR}"
   "${NAM_CORE_DIR}/Dependencies/eigen"
   "${NLOHMANN_JSON_INCLUDE_DIR}"
+)
+
+target_include_directories(tube_stage_test PRIVATE
+  "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
 target_compile_definitions(nam_pisound_host PRIVATE
@@ -57,6 +65,13 @@ target_link_libraries(nam_pisound_host PRIVATE
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
   target_compile_options(nam_pisound_host PRIVATE
+    -O3
+    -Wall
+    -Wextra
+    -Wpedantic
+  )
+
+  target_compile_options(tube_stage_test PRIVATE
     -O3
     -Wall
     -Wextra
