@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>raspi-NAM Control</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="amp-cabinet">
+        <div class="amp-handle" aria-hidden="true"></div>
+        <header class="hero faceplate">
+          <div class="brand-lockup">
+            <p class="eyebrow">raspi-NAM</p>
+            <h1>Combo Control</h1>
+          </div>
+          <p class="hero-copy">Manage model selection, gain, and tone settings from any browser on your network.</p>
+        </header>
+
+        <section class="panel status-panel">
+          <div class="panel-header">
+            <h2>Engine State</h2>
+            <span id="health-pill" class="status-pill">Checking...</span>
+          </div>
+          <p id="status-message" class="status-message">Loading current config...</p>
+        </section>
+
+        <form id="control-form" class="control-grid speaker-cloth">
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Model</h2>
+            </div>
+            <label class="field">
+              <span>Model</span>
+              <select id="model" name="model"></select>
+            </label>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Audio</h2>
+            </div>
+            <label class="field">
+              <span>ALSA Input</span>
+              <input id="alsa_input" name="alsa_input" type="text" placeholder="plughw:2,0">
+            </label>
+            <label class="field">
+              <span>ALSA Output</span>
+              <input id="alsa_output" name="alsa_output" type="text" placeholder="plughw:2,0">
+            </label>
+            <label class="field">
+              <span>Sample Rate</span>
+              <input id="sample_rate" name="sample_rate" type="number" min="8000" step="1">
+            </label>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Gain</h2>
+            </div>
+            <label class="field range-field">
+              <span>Input Gain <output id="input_gain_db_value">0.0 dB</output></span>
+              <input id="input_gain_db" name="input_gain_db" type="range" min="-24" max="24" step="0.1">
+            </label>
+            <label class="field range-field">
+              <span>Output Gain <output id="output_gain_db_value">0.0 dB</output></span>
+              <input id="output_gain_db" name="output_gain_db" type="range" min="-24" max="24" step="0.1">
+            </label>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Tone</h2>
+            </div>
+            <label class="field">
+              <span>Tone Stack</span>
+              <select id="tone_stack" name="tone_stack">
+                <option value="post-eq">post-eq</option>
+                <option value="none">none</option>
+                <option value="fender">fender</option>
+                <option value="marshall">marshall</option>
+                <option value="vox">vox</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Tone Position</span>
+              <select id="tone_position" name="tone_position">
+                <option value="post">post</option>
+                <option value="pre">pre</option>
+              </select>
+            </label>
+            <label class="field range-field">
+              <span>Bass <output id="bass_db_value">0.0 dB</output></span>
+              <input id="bass_db" name="bass_db" type="range" min="-12" max="12" step="0.1">
+            </label>
+            <label class="field range-field">
+              <span>Mid <output id="mid_db_value">0.0 dB</output></span>
+              <input id="mid_db" name="mid_db" type="range" min="-12" max="12" step="0.1">
+            </label>
+            <label class="field range-field">
+              <span>Treble <output id="treble_db_value">0.0 dB</output></span>
+              <input id="treble_db" name="treble_db" type="range" min="-12" max="12" step="0.1">
+            </label>
+          </section>
+
+          <section class="panel actions-panel">
+            <div class="actions">
+              <button id="refresh-button" type="button" class="button button-secondary">Refresh</button>
+              <button id="save-button" type="submit" class="button">Save Config</button>
+            </div>
+          </section>
+        </form>
+      </section>
+    </main>
+
+    <script src="/static/app.js" defer></script>
+  </body>
+  </html>

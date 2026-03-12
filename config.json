@@ -1,0 +1,17 @@
+{
+  "model": "",
+  "audio": {
+    "alsa_input": "plughw:2,0",
+    "alsa_output": "plughw:2,0",
+    "sample_rate": 48000
+  },
+  "params": {
+    "input_gain_db": 0.0,
+    "output_gain_db": 0.0,
+    "bass_db": 0.0,
+    "mid_db": 0.0,
+    "treble_db": 0.0,
+    "tone_stack": "post-eq",
+    "tone_position": "post"
+  }
+}

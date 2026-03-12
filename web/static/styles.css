@@ -1,0 +1,298 @@
+:root {
+  --tolex: #231811;
+  --tolex-hi: #3a2921;
+  --cloth-dark: #584e47;
+  --cloth-light: #887a70;
+  --faceplate: #d9c18f;
+  --faceplate-hi: #f0e3bd;
+  --panel: rgba(33, 23, 18, 0.78);
+  --panel-border: rgba(255, 230, 181, 0.12);
+  --ink: #f5ebd4;
+  --muted: #cdbd9b;
+  --accent: #d69033;
+  --accent-strong: #b66c1a;
+  --ok: #5fce85;
+  --error: #ff8c79;
+  --shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+  --radius: 28px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255, 214, 162, 0.18), transparent 18%),
+    radial-gradient(circle at 88% 16%, rgba(255, 255, 255, 0.08), transparent 18%),
+    linear-gradient(180deg, #5f4737, #261912 42%, #140d09 100%);
+}
+
+.app-shell {
+  width: min(1180px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 36px 0 52px;
+}
+
+.amp-cabinet {
+  position: relative;
+  padding: 38px 24px 24px;
+  border-radius: 34px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.03), transparent 26%),
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 42%),
+    linear-gradient(180deg, var(--tolex-hi), var(--tolex));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.45),
+    var(--shadow);
+}
+
+.amp-cabinet::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 231, 190, 0.08);
+  pointer-events: none;
+}
+
+.amp-handle {
+  width: 180px;
+  height: 18px;
+  margin: 0 auto 22px;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, #2e211a, #17100c);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.faceplate {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 24px;
+  margin-bottom: 18px;
+  border-radius: 20px;
+  color: #24180d;
+  background:
+    linear-gradient(180deg, var(--faceplate-hi), var(--faceplate));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(111, 77, 30, 0.25);
+}
+
+.brand-lockup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  font-size: 0.72rem;
+  color: rgba(36, 24, 13, 0.72);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.hero-copy {
+  width: min(42ch, 100%);
+  margin: 0;
+  color: rgba(36, 24, 13, 0.78);
+  font-size: 0.98rem;
+}
+
+.control-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.speaker-cloth {
+  position: relative;
+  padding: 22px;
+  border-radius: 24px;
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(0, 0, 0, 0.28) 1px, transparent 1px),
+    linear-gradient(135deg, var(--cloth-light), var(--cloth-dark));
+  background-size: auto, 12px 12px, 12px 12px, auto;
+  box-shadow: inset 0 0 0 1px rgba(255, 245, 220, 0.05);
+}
+
+.panel {
+  padding: 20px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 16px 24px rgba(0, 0, 0, 0.18);
+}
+
+.status-panel {
+  margin-bottom: 18px;
+  background:
+    linear-gradient(180deg, rgba(38, 28, 21, 0.9), rgba(22, 15, 11, 0.86));
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.panel h2 {
+  margin: 0;
+  font-size: 1.02rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.status-pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 235, 196, 0.08);
+  color: var(--muted);
+  font-size: 0.85rem;
+  border: 1px solid rgba(255, 235, 196, 0.12);
+}
+
+.status-pill[data-ok="true"] {
+  background: rgba(95, 206, 133, 0.1);
+  color: var(--ok);
+}
+
+.status-message {
+  margin: 0;
+  color: var(--muted);
+}
+
+.status-message[data-error="true"] {
+  color: var(--error);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.field span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.96rem;
+  color: var(--muted);
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 231, 190, 0.14);
+  border-radius: 14px;
+  background: rgba(255, 248, 234, 0.08);
+  color: var(--ink);
+}
+
+input[type="text"]::placeholder {
+  color: rgba(205, 189, 155, 0.62);
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.actions-panel {
+  display: flex;
+  align-items: end;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.button {
+  flex: 1;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #efab52, var(--accent-strong));
+  color: #1f1309;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.button:hover {
+  background: linear-gradient(180deg, #f6b866, #c57419);
+}
+
+.button-secondary {
+  background: linear-gradient(180deg, rgba(255, 248, 234, 0.14), rgba(255, 248, 234, 0.08));
+  color: var(--ink);
+}
+
+.button-secondary:hover {
+  background: linear-gradient(180deg, rgba(255, 248, 234, 0.18), rgba(255, 248, 234, 0.11));
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    width: min(100vw - 20px, 100%);
+    padding-top: 20px;
+  }
+
+  .amp-cabinet {
+    padding: 24px 14px 14px;
+  }
+
+  .faceplate {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}
